@@ -10,6 +10,7 @@ import wpilib
 from wpilib import drive, Timer, SendableChooser
 import ctre
 from networktables import NetworkTables
+import funct
 # import rangefinder
 
 
@@ -21,7 +22,8 @@ class robot(wpilib.IterativeRobot):
         self.controller = wpilib.XboxController(0)
 
         self.camServo = wpilib.Servo(0)
-
+        # self.solenoid = wpilib.Solenoid(1)
+        self.doorMotor = wpilib.Talon(1)
 
     def disabledInit(self):
         pass
@@ -75,9 +77,16 @@ class robot(wpilib.IterativeRobot):
             self.BumperLeft = self.controller.getBumper(self.kLeft)
             self.BumperRight = self.controller.getBumper(self.kRight)
 
-            print(self.controller.getX(self.kRight))
-            self.camServo.set(self.controller.getX(self.kRight))
+            servoMap = funct.numMap(self.controller.getX(self.kRight), -1.0, 1.0, 0.0, 1.0)
+            self.camServo.set(servoMap)
             # self.camServo.setAngle()
+            # if self.controller.getAButton():
+            #     self.solenoid.set(True)
+            if self.controller.getBButton():
+                self.doorMotor.set(0.5)
+            else:
+                self.doorMotor.set(0.0)
+
 
 
             # Drive System #
