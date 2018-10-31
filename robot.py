@@ -27,6 +27,7 @@ class robot(wpilib.IterativeRobot):
         # self.solenoid = wpilib.Solenoid(1)
         self.doorMotor = wpilib.Talon(1)
         self.nidec = wpilib.NidecBrushless(2, 0)
+        self.switch = wpilib.DigitalInput(1)
 
     def disabledInit(self):
         pass
@@ -71,7 +72,7 @@ class robot(wpilib.IterativeRobot):
     def teleopPeriodic(self):
 
         """This function is called periodically during operator control."""
-
+        print(self.switch.get())
         # Sets triggers and bumpers each loop
         self.TriggerLeft = self.controller.getTriggerAxis(self.kLeft)
         self.TriggerRight = self.controller.getTriggerAxis(self.kRight)
@@ -92,6 +93,9 @@ class robot(wpilib.IterativeRobot):
             self.nidec.set(0.5)
             # print(self.nidec.getDescription())
         else:
+            self.nidec.set(0.0)
+
+        if self.switch.get():
             self.nidec.set(0.0)
 
 
