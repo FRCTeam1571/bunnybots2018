@@ -21,7 +21,7 @@ class robot(wpilib.IterativeRobot):
         '''Robot Initiation'''
         self.controller = wpilib.XboxController(0)
 
-        # wpilib.CameraServer.launch('vision.py:main')
+        wpilib.CameraServer.launch('vision.py:main')
 
         self.camServo = wpilib.Servo(0)
         # self.solenoid = wpilib.Solenoid(1)
@@ -96,7 +96,9 @@ class robot(wpilib.IterativeRobot):
             self.nidec.set(0.0)
 
         if self.switch.get():
-            self.nidec.set(0.0)
+            self.nidec.disable()
+        else:
+            self.nidec.enable()
 
 
 
