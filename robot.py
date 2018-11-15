@@ -21,13 +21,9 @@ class robot(wpilib.IterativeRobot):
         '''Robot Initiation'''
         self.controller = wpilib.XboxController(0)
 
-        wpilib.CameraServer.launch('vision.py:main')
+        # wpilib.CameraServer.launch('vision2.py:main')
 
-        self.camServo = wpilib.Servo(0)
-        # self.solenoid = wpilib.Solenoid(1)
-        self.doorMotor = wpilib.Talon(1)
-        self.nidec = wpilib.NidecBrushless(2, 0)
-        self.switch = wpilib.DigitalInput(1)
+        self.intake = wpilib.Talon(0)
 
     def disabledInit(self):
         pass
@@ -72,35 +68,16 @@ class robot(wpilib.IterativeRobot):
     def teleopPeriodic(self):
 
         """This function is called periodically during operator control."""
-        print(self.switch.get())
         # Sets triggers and bumpers each loop
         self.TriggerLeft = self.controller.getTriggerAxis(self.kLeft)
         self.TriggerRight = self.controller.getTriggerAxis(self.kRight)
         self.BumperLeft = self.controller.getBumper(self.kLeft)
         self.BumperRight = self.controller.getBumper(self.kRight)
 
-        servoMap = funct.numMap(self.controller.getX(self.kRight), -1.0, 1.0, 0.0, 1.0)
-        self.camServo.set(servoMap)
-        # self.camServo.setAngle()
-        # if self.controller.getAButton():
-        #     self.solenoid.set(True)
-        if self.controller.getBButton():
-            self.doorMotor.set(0.5)
+        if self.controller.getXButton():
+            self.intake.set(0.5)
         else:
-            self.doorMotor.set(0.0)
-
-        if self.controller.getYButton():
-            self.nidec.set(0.5)
-            # print(self.nidec.getDescription())
-        else:
-            self.nidec.set(0.0)
-
-        if self.switch.get():
-            self.nidec.disable()
-        else:
-            self.nidec.enable()
-
-
+            self.intake.set(0.0)
 
         # Drive System #
         # backwards control
