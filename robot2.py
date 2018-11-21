@@ -29,6 +29,7 @@ class robot(wpilib.IterativeRobot):
         self.nidec = wpilib.NidecBrushless(2, 0)
         self.switch = wpilib.DigitalInput(1)
         self.nidecTach = wpilib.Counter(2)
+        self.intake = wpilib.Talon(0)
 
     def disabledInit(self):
         pass
@@ -102,6 +103,12 @@ class robot(wpilib.IterativeRobot):
             self.nidec.disable()
         else:
             self.nidec.enable()
+
+        # Replace With Toggle For Intake
+        if self.controller.getXButton():
+            self.intake.set(0.5)
+        else:
+            self.intake.set(0.0)
 
 
         # Drive System #

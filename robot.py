@@ -21,9 +21,11 @@ class robot(wpilib.IterativeRobot):
         '''Robot Initiation'''
         self.controller = wpilib.XboxController(0)
 
-        # wpilib.CameraServer.launch('vision2.py:main')
+        wpilib.CameraServer.launch()
 
         self.intake = wpilib.Talon(0)
+
+        self.colorSensor = funct.ColorSensor(7, 6, 5, 4, 9, 8)
 
     def disabledInit(self):
         pass
@@ -34,11 +36,9 @@ class robot(wpilib.IterativeRobot):
     def disabledPeriodic(self):
         pass
 
-        # Ultrasonic test #
-        # if self.timer.get() >= 2.0:
-        #     self.timer.reset()
-        #     self.timer.start()
-        #     self.table.putNumber('Range In Inches', self.ultrasonic.GetRangeInInches(self))
+        # Color Sensor Test #
+        print(self.colorSensor.getColor())
+
 
 
     def autonomousInit(self):
@@ -74,10 +74,7 @@ class robot(wpilib.IterativeRobot):
         self.BumperLeft = self.controller.getBumper(self.kLeft)
         self.BumperRight = self.controller.getBumper(self.kRight)
 
-        if self.controller.getXButton():
-            self.intake.set(0.5)
-        else:
-            self.intake.set(0.0)
+        
 
         # Drive System #
         # backwards control
