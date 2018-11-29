@@ -21,11 +21,25 @@ class robot(wpilib.IterativeRobot):
         '''Robot Initiation'''
         self.controller = wpilib.XboxController(0)
 
-        wpilib.CameraServer.launch()
+        # wpilib.CameraServer.launch()
 
         self.intake = wpilib.Talon(0)
 
-        self.colorSensor = funct.ColorSensor(7, 6, 5, 4, 9, 8)
+        self.colorSensor = funct.ColorSensor(10, 11, 12, 13, 14, 15)
+        self.colorSensor.setColor("blue")
+
+        # Talon SRX #
+        # Right drivetrain
+        # self.fr_motor = ctre.wpi_talonsrx.WPI_TalonSRX(2)  # 2
+        # self.rr_motor = ctre.wpi_talonsrx.WPI_TalonSRX(3)  # 3
+        # self.right = wpilib.SpeedControllerGroup(self.fr_motor, self.rr_motor)
+
+        # # Left drivetrain
+        # self.fl_motor = ctre.wpi_talonsrx.WPI_TalonSRX(0)  # 0
+        # self.rl_motor = ctre.wpi_talonsrx.WPI_TalonSRX(1)  # 1
+        # self.left = wpilib.SpeedControllerGroup(self.fl_motor, self.rl_motor)
+
+        # self.drive = wpilib.drive.DifferentialDrive(self.left, self.right)
 
     def disabledInit(self):
         pass
@@ -37,7 +51,6 @@ class robot(wpilib.IterativeRobot):
         pass
 
         # Color Sensor Test #
-        print(self.colorSensor.getColor())
 
 
 
@@ -74,13 +87,16 @@ class robot(wpilib.IterativeRobot):
         self.BumperLeft = self.controller.getBumper(self.kLeft)
         self.BumperRight = self.controller.getBumper(self.kRight)
 
+        print(self.colorSensor.getColor())
+        # self.colorSensor.getColor()
+
         
 
         # Drive System #
         # backwards control
         # if self.BumperLeft:
         #     self.TriggerLeft = self.TriggerLeft * -1
-        #
+        
         # # Drive #
         # self.drive.arcadeDrive(self.TriggerLeft, self.controller.getX(self.kLeft))
 

@@ -31,6 +31,20 @@ class robot(wpilib.IterativeRobot):
         self.nidecTach = wpilib.Counter(2)
         self.intake = wpilib.Talon(0)
 
+        # Talon SRX #
+        # Right drivetrain
+        self.fr_motor = ctre.wpi_talonsrx.WPI_TalonSRX(2)  # 2
+        self.rr_motor = ctre.wpi_talonsrx.WPI_TalonSRX(3)  # 3
+        self.right = wpilib.SpeedControllerGroup(self.fr_motor, self.rr_motor)
+
+        # Left drivetrain
+        self.fl_motor = ctre.wpi_talonsrx.WPI_TalonSRX(0)  # 0
+        self.rl_motor = ctre.wpi_talonsrx.WPI_TalonSRX(1)  # 1
+        self.left = wpilib.SpeedControllerGroup(self.fl_motor, self.rl_motor)
+
+        self.drive = wpilib.drive.DifferentialDrive(self.left, self.right)
+
+
     def disabledInit(self):
         pass
         # self.timer.reset()
