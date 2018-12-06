@@ -8,8 +8,10 @@ class ColorSensor():
     def __init__(self, OUT, OE, S0, S1, S2, S3):
         self.OUT = wpilib.Counter(OUT)
         self.OE = wpilib.DigitalOutput(OE)
+        #Frequencies
         self.S0 = wpilib.DigitalOutput(S0)
         self.S1 = wpilib.DigitalOutput(S1)
+        #Colours
         self.S2 = wpilib.DigitalOutput(S2)
         self.S3 = wpilib.DigitalOutput(S3)
         
@@ -19,8 +21,6 @@ class ColorSensor():
         self.S0.set(True) # 100% Output Frequency
         self.S1.set(True)
 
-        self.S2.set(False) # Red
-        self.S3.set(False)
 
     def setColor(self, rgba):
         if rgba == 'red':
@@ -35,7 +35,7 @@ class ColorSensor():
             self.S3.set(False)
         elif rgba == 'green':
             self.S2.set(True)
-            self.S2.set(True)
+            self.S3.set(True)
         else:
             print("Error: RGBA Value Not Accepted")
     
@@ -60,6 +60,7 @@ class ColorSensor():
 
     def getColor(self):
         
-        # return self.OUT.getRaw()
-        return self.OUT.getPeriod()
+        frequency = 1 / (self.OUT.getPeriod() / 2) # Gets Frequency. getPeriod() displays the length of two periods, and frequency is equal to 1 / period
+        
+        return frequency
         

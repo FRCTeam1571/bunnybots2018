@@ -26,7 +26,7 @@ class robot(wpilib.IterativeRobot):
         self.intake = wpilib.Talon(0)
 
         self.colorSensor = funct.ColorSensor(10, 11, 12, 13, 14, 15)
-        self.colorSensor.setColor("blue")
+        self.colorSensor.setColor("clear")
 
         # Talon SRX #
         # Right drivetrain
@@ -88,9 +88,16 @@ class robot(wpilib.IterativeRobot):
         self.BumperRight = self.controller.getBumper(self.kRight)
 
         print(self.colorSensor.getColor())
-        # self.colorSensor.getColor()
 
-        
+        # if self.controller.getXButton() and not self.GrabLast:
+        #     self.GrabToggle = not self.GrabToggle
+
+        # self.GrabLast = self.controller.getXButton()
+  
+        # if self.GrabToggle and self.GrabLast:
+        #     self.grab.set(True)
+        # elif self.GrabLast:
+        #     self.grab.set(False)
 
         # Drive System #
         # backwards control
@@ -101,7 +108,7 @@ class robot(wpilib.IterativeRobot):
         # self.drive.arcadeDrive(self.TriggerLeft, self.controller.getX(self.kLeft))
 
 
-
+#Runs function upon ready
 if __name__ == "__main__":
     wpilib.run(robot,
             physics_enabled=True)
