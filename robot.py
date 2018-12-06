@@ -11,7 +11,7 @@ from wpilib import drive, Timer, SendableChooser
 import ctre
 from networktables import NetworkTables
 import funct
-# import rangefinder
+import rangefinder
 
 
 
@@ -28,6 +28,7 @@ class robot(wpilib.IterativeRobot):
         self.colorSensor = funct.ColorSensor(10, 11, 12, 13, 14, 15)
         self.colorSensor.setColor("clear")
 
+        self.rf = rangefinder.MaxUltrasonic(0)
         # Talon SRX #
         # Right drivetrain
         # self.fr_motor = ctre.wpi_talonsrx.WPI_TalonSRX(2)  # 2
@@ -50,7 +51,7 @@ class robot(wpilib.IterativeRobot):
     def disabledPeriodic(self):
         pass
 
-        # Color Sensor Test #
+        
 
 
 
@@ -87,7 +88,11 @@ class robot(wpilib.IterativeRobot):
         self.BumperLeft = self.controller.getBumper(self.kLeft)
         self.BumperRight = self.controller.getBumper(self.kRight)
 
-        print(self.colorSensor.getColor())
+        # Rangefinder Test #
+        print(self.rf.GetRangeInCM())
+
+        # Color Sensor Test #
+        # print(self.colorSensor.getFrequency())
 
         # if self.controller.getXButton() and not self.GrabLast:
         #     self.GrabToggle = not self.GrabToggle

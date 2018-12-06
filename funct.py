@@ -58,8 +58,10 @@ class ColorSensor():
 
 
 
-    def getColor(self):
-        
+    def getFrequency(self):
+        # 100000 Max
+        # 0 Min
+        frequency = numMap(self.OUT.getPeriod(), 0, 100000, 0, )
         frequency = 1 / (self.OUT.getPeriod() / 2) # Gets Frequency. getPeriod() displays the length of two periods, and frequency is equal to 1 / period
         
         return frequency
