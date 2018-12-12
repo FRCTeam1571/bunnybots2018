@@ -14,9 +14,9 @@ class ColorSensor():
         #Colours
         self.S2 = wpilib.DigitalOutput(S2)
         self.S3 = wpilib.DigitalOutput(S3)
-        
 
-        # self.OUT.setUpdateWhenEmpty(True) # Want output to be 0 when output is stalled
+        self.maxVal = 1000000 # Max output value
+        
 
         self.S0.set(True) # 100% Output Frequency
         self.S1.set(True)
@@ -54,15 +54,39 @@ class ColorSensor():
             self.S1.set(True)
         else:
             print("Error: Frequency Value Not Accepted")
+
+    def setMaxValue(self, value):
+        self.maxVal = value
         
 
 
 
-    def getFrequency(self):
+    def getValue(self):
         # 100000 Max
         # 0 Min
-        frequency = numMap(self.OUT.getPeriod(), 0, 100000, 0, )
         frequency = 1 / (self.OUT.getPeriod() / 2) # Gets Frequency. getPeriod() displays the length of two periods, and frequency is equal to 1 / period
+        mapFreq = numMap(frequency, 0, 1000000, 0, 1000)
         
-        return frequency
+        return mapFreq
+        
+def colorSorter(self):
+    print(self.colorSensor.getValue())
+    if not self.haveColor:
+        print("Nice")
+        if self.colorSensor.getValue() <= 150 and self.colorSensor.getValue() >= 200: # If the color sensor detects red
+            self.haveColor = True
+            if self.correctColor == "r":
+                self.sortMotor.set(-0.5)
+            else:
+                self.sortMotor.set(0.5)
+        if self.colorSensor.getValue() <= 100 and self.colorSensor.getValue() > 150: # If the color sensor detects blue
+            self.haveColor = True
+            if self.correctColor == "b":
+                self.sortMotor.set(-0.5)
+            else:
+                self.sortMotor.set(0.5)
+
+    if self.sortSwitch.get() and self.haveColor:
+        self.haveColor = False
+        self.sortMotor.set(0.0)
         

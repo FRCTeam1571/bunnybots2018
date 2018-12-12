@@ -24,7 +24,6 @@ class robot(wpilib.IterativeRobot):
         wpilib.CameraServer.launch('vision2.py:main')
 
         self.camServo = wpilib.Servo(0)
-        # self.solenoid = wpilib.Solenoid(1)
         self.doorMotor = wpilib.Talon(1)
         self.nidec = wpilib.NidecBrushless(2, 0)
         self.switch = wpilib.DigitalInput(1)

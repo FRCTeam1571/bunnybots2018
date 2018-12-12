@@ -23,12 +23,17 @@ class robot(wpilib.IterativeRobot):
 
         # wpilib.CameraServer.launch()
 
-        self.intake = wpilib.Talon(0)
+        # self.intake = wpilib.Talon(0)
 
         self.colorSensor = funct.ColorSensor(10, 11, 12, 13, 14, 15)
         self.colorSensor.setColor("clear")
+        self.correctColor = 'r' # Color for the color sensor to look for
+        self.sortSwitch = wpilib.DigitalInput(0)
+
+        self.sortMotor = wpilib.Talon(0) ## !! CHANGE TO TALON !! ##
 
         self.rf = rangefinder.MaxUltrasonic(0)
+
         # Talon SRX #
         # Right drivetrain
         # self.fr_motor = ctre.wpi_talonsrx.WPI_TalonSRX(2)  # 2
@@ -43,7 +48,7 @@ class robot(wpilib.IterativeRobot):
         # self.drive = wpilib.drive.DifferentialDrive(self.left, self.right)
 
     def disabledInit(self):
-        pass
+        self.haveColor = False
         # self.timer.reset()
         # self.timer.start()
 
@@ -57,7 +62,7 @@ class robot(wpilib.IterativeRobot):
 
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
-        pass
+        self.haveColor = False
         # self.timer.reset()
         # self.timer.start()
         # self.select = self.chooser.getSelected()
@@ -73,6 +78,7 @@ class robot(wpilib.IterativeRobot):
         """This function is run once each time the robot enters teleop mode"""
         self.kLeft = self.controller.Hand.kLeft
         self.kRight = self.controller.Hand.kRight
+        self.haveColor = False
         # self.timer.reset()
         # self.timer.start()
 
@@ -88,11 +94,10 @@ class robot(wpilib.IterativeRobot):
         self.BumperLeft = self.controller.getBumper(self.kLeft)
         self.BumperRight = self.controller.getBumper(self.kRight)
 
-        # Rangefinder Test #
-        print(self.rf.GetRangeInCM())
 
+        funct.colorSorter(self)
         # Color Sensor Test #
-        # print(self.colorSensor.getFrequency())
+        # print(round(self.colorSensor.getValue(), 2))
 
         # if self.controller.getXButton() and not self.GrabLast:
         #     self.GrabToggle = not self.GrabToggle
