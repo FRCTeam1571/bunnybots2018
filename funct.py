@@ -29,7 +29,6 @@ class ColorSensor():
         elif rgba == 'blue':
             self.S2.set(False)
             self.S3.set(True)
-            print("blue")
         elif rgba == 'clear':
             self.S2.set(True)
             self.S3.set(False)
@@ -65,28 +64,13 @@ class ColorSensor():
         # 100000 Max
         # 0 Min
         frequency = 1 / (self.OUT.getPeriod() / 2) # Gets Frequency. getPeriod() displays the length of two periods, and frequency is equal to 1 / period
-        mapFreq = numMap(frequency, 0, 1000000, 0, 1000)
+
+        # frequency = numMap(frequency, 0, 100000, 0, 1000)
         
-        return mapFreq
+        return frequency
         
 def colorSorter(self):
-    print(self.colorSensor.getValue())
-    if not self.haveColor:
-        print("Nice")
-        if self.colorSensor.getValue() <= 150 and self.colorSensor.getValue() >= 200: # If the color sensor detects red
-            self.haveColor = True
-            if self.correctColor == "r":
-                self.sortMotor.set(-0.5)
-            else:
-                self.sortMotor.set(0.5)
-        if self.colorSensor.getValue() <= 100 and self.colorSensor.getValue() > 150: # If the color sensor detects blue
-            self.haveColor = True
-            if self.correctColor == "b":
-                self.sortMotor.set(-0.5)
-            else:
-                self.sortMotor.set(0.5)
-
-    if self.sortSwitch.get() and self.haveColor:
-        self.haveColor = False
-        self.sortMotor.set(0.0)
+    if not self.haveColor and not self.sortSwitch.get():
+        pass
+          
         
